@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Personal Study Planner</title>
+<style>
+:root{--bg:#f7f6ff;--card:#fff;--ink:#1c1b3a;--mute:#6a6a8a;--line:#e4e2f5;--a:#5b4bdb;--a2:#14b8a6;--soft:#ecebff;--ok:#16a34a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f0e1f;--card:#1a1932;--ink:#efeeff;--mute:#9a99bd;--line:#2e2c55;--a:#8b7dff;--a2:#2dd4bf;--soft:#25234a;--ok:#4ade80}}
+:root[data-theme="dark"]{--bg:#0f0e1f;--card:#1a1932;--ink:#efeeff;--mute:#9a99bd;--line:#2e2c55;--a:#8b7dff;--a2:#2dd4bf;--soft:#25234a;--ok:#4ade80}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+.w{max-width:1040px;margin:0 auto;padding:0 20px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0;font-weight:700}
+nav a{color:var(--mute);text-decoration:none;font-weight:500;margin-left:18px;font-size:14px}
+.logo{color:var(--a)}
+.hero{text-align:center;padding:56px 0 40px}
+.pill{display:inline-block;background:var(--soft);color:var(--a);padding:6px 14px;border-radius:99px;font-size:13px;font-weight:600}
+h1{font-size:clamp(34px,7vw,60px);line-height:1.1;margin:18px 0;letter-spacing:-1.5px}
+h1 span{background:linear-gradient(90deg,var(--a),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{max-width:620px;margin:0 auto 26px;color:var(--mute);font-size:18px}
+.btn{display:inline-block;background:var(--a);color:#fff;border:0;padding:12px 22px;border-radius:12px;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer}
+.btn.g{background:var(--soft);color:var(--a);margin-left:8px}
+section{padding:44px 0}
+h2{font-size:30px;margin:0 0 8px;letter-spacing:-.5px}
+.sub{color:var(--mute);margin:0 0 26px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+.c .i{font-size:26px}.c h3{margin:8px 0 4px;font-size:17px}.c p{margin:0;color:var(--mute);font-size:14px}
+.demo{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 20px 50px -25px var(--a)}
+.prog{height:10px;background:var(--soft);border-radius:9px;overflow:hidden;margin:6px 0 16px}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--a),var(--a2));transition:width .4s}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;width:100%}
+textarea{grid-column:1/-1;resize:vertical;min-height:50px}
+form .btn{grid-column:1/-1}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}.bar input{flex:2;min-width:140px}.bar select{flex:1;min-width:110px}
+.t{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:14px;margin-bottom:8px;background:var(--bg)}
+.t input[type=checkbox]{width:20px;height:20px;margin-top:3px;accent-color:var(--a)}
+.t div{flex:1;min-width:0}.t b{display:block}.t small{color:var(--mute)}
+.t.d b{text-decoration:line-through;opacity:.5}
+.t button{background:none;border:0;cursor:pointer;font-size:16px;padding:4px;color:var(--mute)}
+.empty{text-align:center;color:var(--mute);padding:20px}
+.stack{display:flex;flex-wrap:wrap;gap:10px}
+.stack span{background:var(--card);border:1px solid var(--line);padding:9px 16px;border-radius:99px;font-weight:600;font-size:14px}
+.steps{counter-reset:s;display:grid;gap:12px}
+.steps .c{display:flex;gap:14px;align-items:center}.steps .c:before{counter-increment:s;content:counter(s);background:var(--a);color:#fff;width:34px;height:34px;flex:none;border-radius:50%;display:grid;place-items:center;font-weight:700}
+.abs{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;color:var(--mute)}
+.abs p{margin:0 0 12px}
+footer{text-align:center;color:var(--mute);font-size:13px;padding:30px 0}
+</style>
+</head>
+<body>
+<div class="w">
+<nav><div class="logo">📚 StudyPlanner</div><div><a href="#features">Features</a><a href="#demo">Demo</a><a href="#tech">Tech</a><a href="#abstract">Abstract</a></div></nav>
+
+<header class="hero">
+<span class="pill">Student project · Web application</span>
+<h1>Plan every study session. <span>Track every win.</span></h1>
+<p class="lead">A simple web-based planner that keeps your subjects, topics and deadlines in one organized place, so nothing gets forgotten.</p>
+<a class="btn" href="#demo">Try the live demo</a><a class="btn g" href="#features">See features</a>
+</header>
+
+<section id="features">
+<h2>Everything a student needs</h2><p class="sub">Simple tools that make daily studying easier to manage.</p>
+<div class="grid">
+<div class="c"><div class="i">✏️</div><h3>CRUD tasks</h3><p>Add, view, edit and delete study tasks in seconds.</p></div>
+<div class="c"><div class="i">🗂️</div><h3>Rich details</h3><p>Subject, topic, description, study date and duration for each task.</p></div>
+<div class="c"><div class="i">✅</div><h3>Status tracking</h3><p>Mark tasks complete and clearly separate pending from done.</p></div>
+<div class="c"><div class="i">🔎</div><h3>Search &amp; filter</h3><p>Find any topic fast and filter by status.</p></div>
+<div class="c"><div class="i">📅</div><h3>Study scheduling</h3><p>Plan sessions by date so deadlines never sneak up.</p></div>
+<div class="c"><div class="i">📈</div><h3>Progress tracking</h3><p>See your completion rate grow as you study.</p></div>
+</div>
+</section>
+
+<section id="demo">
+<h2>Live demo</h2><p class="sub">A working mini planner. Your tasks are saved in this browser.</p>
+<div class="demo">
+<b id="pt">0 of 0 completed</b>
+<div class="prog"><i id="pb"></i></div>
+<form id="f">
+<input id="s" placeholder="Subject" required>
+<input id="tp" placeholder="Topic" required>
+<input id="dt" type="date" required>
+<input id="du" type="number" min="5" step="5" placeholder="Minutes" required>
+<textarea id="ds" placeholder="Description (optional)"></textarea>
+<button class="btn" id="sb">Add study task</button>
+</form>
+<div class="bar"><input id="q" placeholder="🔎 Search tasks"><select id="fl"><option value="all">All</option><option value="p">Pending</option><option value="d">Completed</option></select></div>
+<div id="l"></div>
+</div>
+</section>
+
+<section id="how">
+<h2>How it works</h2><p class="sub">Three simple steps.</p>
+<div class="steps">
+<div class="c"><div><b>Add your tasks</b><br><small>Enter the subject, topic, date and duration.</small></div></div>
+<div class="c"><div><b>Study and check off</b><br><small>Mark each task completed when you finish.</small></div></div>
+<div class="c"><div><b>Watch progress grow</b><br><small>Use search and filters to stay on top of what is left.</small></div></div>
+</div>
+</section>
+
+<section id="tech">
+<h2>Built with</h2><p class="sub">A responsive frontend, a backend for study operations, and a database for storage.</p>
+<div class="stack"><span>🖥️ Responsive Frontend</span><span>⚙️ Backend Services</span><span>🗄️ Database</span><span>🧩 Visual Studio Code</span><span>🌿 Git</span><span>🐙 GitHub</span></div>
+</section>
+
+<section id="abstract">
+<h2>Project abstract</h2><p class="sub">Why this project exists.</p>
+<div class="abs">
+<p>Managing daily study activities is difficult when students juggle multiple subjects, topics, assignments and deadlines. They may forget topics, miss schedules, or struggle to monitor progress.</p>
+<p>The Personal Study Planner organizes these activities in one system, with basic CRUD operations, task status management, search, filtering, scheduling and progress tracking, backed by a database and managed with Git and GitHub.</p>
+<p>It aims to reduce the difficulty of managing study time, improve organization, and help students track their learning efficiently, while demonstrating frontend, backend and database development in one practical application.</p>
+<div class="stack"><span>Study Management</span><span>CRUD</span><span>Scheduling</span><span>Progress Tracking</span><span>Git &amp; GitHub</span></div>
+</div>
+</section>
+<footer>Personal Study Planner · A simple study management application</footer>
+</div>
+
+<script>
+(function(){
+var K="spTasks",tasks=[],editId=null,$=function(i){return document.getElementById(i)};
+try{tasks=JSON.parse(localStorage.getItem(K)||"[]")}catch(e){tasks=[]}
+if(!Array.isArray(tasks)||!tasks.length){var d=new Date().toISOString().slice(0,10);tasks=[{id:1,s:"Data Structures",tp:"Binary trees",dt:d,du:45,ds:"Traversals and practice problems",done:false},{id:2,s:"Linear Algebra",tp:"Eigenvalues",dt:d,du:30,ds:"",done:true}]}
+function save(){try{localStorage.setItem(K,JSON.stringify(tasks))}catch(e){}}
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function render(){
+var q=$("q").value.toLowerCase(),fl=$("fl").value,done=tasks.filter(function(t){return t.done}).length;
+$("pt").textContent=done+" of "+tasks.length+" completed";
+$("pb").style.width=(tasks.length?done/tasks.length*100:0)+"%";
+var v=tasks.filter(function(t){return(fl=="all"||(fl=="d")==t.done)&&(t.s+t.tp+t.ds).toLowerCase().indexOf(q)>-1}).sort(function(a,b){return a.dt<b.dt?-1:1});
+$("l").innerHTML=v.length?v.map(function(t){return'<div class="t'+(t.done?' d':'')+'"><input type="checkbox" data-a="c" data-i="'+t.id+'"'+(t.done?' checked':'')+'><div><b>'+esc(t.tp)+'</b><small>'+esc(t.s)+' · '+esc(t.dt)+' · '+esc(t.du)+' min'+(t.ds?'<br>'+esc(t.ds):'')+'</small></div><button data-a="e" data-i="'+t.id+'" title="Edit">✏️</button><button data-a="x" data-i="'+t.id+'" title="Delete">🗑️</button></div>'}).join(""):'<div class="empty">No tasks found.</div>';
+}
+$("l").addEventListener("click",function(e){
+var a=e.target.getAttribute("data-a"),id=+e.target.getAttribute("data-i");if(!a)return;
+var t=tasks.filter(function(x){return x.id===id})[0];if(!t)return;
+if(a=="c"){t.done=!t.done}
+if(a=="x"){tasks=tasks.filter(function(x){return x.id!==id})}
+if(a=="e"){editId=id;$("s").value=t.s;$("tp").value=t.tp;$("dt").value=t.dt;$("du").value=t.du;$("ds").value=t.ds;$("sb").textContent="Save changes";$("s").focus();return}
+save();render();
+});
+$("f").addEventListener("submit",function(e){
+e.preventDefault();
+var o={s:$("s").value.trim(),tp:$("tp").value.trim(),dt:$("dt").value,du:$("du").value,ds:$("ds").value.trim()};
+if(editId){tasks.forEach(function(t){if(t.id===editId){for(var k in o)t[k]=o[k]}});editId=null;$("sb").textContent="Add study task"}
+else{o.id=Date.now();o.done=false;tasks.push(o)}
+$("f").reset();save();render();
+});
+$("q").addEventListener("input",render);$("fl").addEventListener("change",render);
+render();
+})();
+</script>
+</body>
+</html>
